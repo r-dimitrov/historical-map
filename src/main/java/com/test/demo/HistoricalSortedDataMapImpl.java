@@ -3,6 +3,7 @@ package com.test.demo;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NavigableMap;
+import java.util.NoSuchElementException;
 import java.util.TreeMap;
 
 public class HistoricalSortedDataMapImpl<K, V extends Timestamp> implements HistoricalDataMap<K, V> {
@@ -22,7 +23,15 @@ public class HistoricalSortedDataMapImpl<K, V extends Timestamp> implements Hist
 
   @Override
   public V get(K key, long instant) {
-    return stateObjects.get(key).floorEntry(instant).getValue();
+    if (stateObjects.get(key) != null && stateObjects.get(key).floorEntry(instant) != null) {
+      return stateObjects.get(key).floorEntry(instant).getValue();
+    }
+    throw new NoSuchElementException("There is no such element");
+  }
+
+  @Override
+  public int size() {
+    return stateObjects.size();
   }
 
 }

@@ -6,4 +6,6 @@ public interface HistoricalDataMap<K, V> {
 
   V get(K key, long instant);
 
+  int size();
+
 }
